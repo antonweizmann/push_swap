@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:08:57 by aweizman          #+#    #+#             */
-/*   Updated: 2023/12/08 11:30:41 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:33:26 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ int	init_stacks(char **argv, t_stack *stacks_a, int argc)
 
 	i = 0;
 	stacks_a->content = ft_atoi(argv[i++]);
+	stacks_a->next = NULL;
 	while (i < argc)
 	{
 		tmp = ft_lstnew(ft_atoi(argv[i]));
 		if (!tmp)
-			return (ft_lstclear(&stacks_a), -1);
+			return (-1);
 		ft_lstadd_back(&stacks_a, tmp);
 		i++;
 	}

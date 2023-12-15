@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   big_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:36:24 by antonweizma       #+#    #+#             */
-/*   Updated: 2023/12/15 04:11:45 by antonweizma      ###   ########.fr       */
+/*   Updated: 2023/12/15 17:39:44 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_stack	*fetch_cheapest(t_stack *stack)
 	t_stack	*cheapest;
 	int		cost;
 
-	if (!stack)
-		return (NULL);
 	cost = INT_MAX;
 	while (stack)
 	{
@@ -35,17 +33,12 @@ t_stack	*fetch_cheapest(t_stack *stack)
 void	rotate_to_push(t_stack **stack_a, t_stack *cheapest
 	, t_stack **stack_b, int all)
 {
-
 	while (*stack_a != cheapest)
 	{
 		if (!(cheapest->over_midpoint))
-		{
 			ra(stack_a);
-		}
 		else
-		{
 			rra(stack_a);
-		}
 	}
 	while (*stack_b != cheapest->target && all)
 	{
@@ -69,7 +62,8 @@ void	rotate_together(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest)
 		rr(stack_a, stack_b);
 }
 
-void	push_a(t_stack **stack_a, t_stack **stack_b, t_sort *sort_a, t_sort *sort_b)
+void	push_a(t_stack **stack_a, t_stack **stack_b,
+			t_sort *sort_a, t_sort *sort_b)
 {
 	t_stack	*cheapest;
 

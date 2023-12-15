@@ -3,43 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   fetch_node_a.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 14:45:41 by antonweizma       #+#    #+#             */
-/*   Updated: 2023/12/15 03:52:33 by antonweizma      ###   ########.fr       */
+/*   Updated: 2023/12/15 17:37:54 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-t_sort	*get_sort(t_stack *stack)
+void	get_sort(t_stack *stack, t_sort **sort)
 {
 	int		min;
 	int		max;
-	t_sort	*sort;
 
-	sort = malloc(sizeof(t_sort));
-	if (!sort)
-		return (NULL);
-	sort->size = 0;
+	(*sort)->size = 0;
 	max = INT_MIN;
 	min = INT_MAX;
 	while (stack)
 	{
-		sort->size += 1;
+		(*sort)->size += 1;
 		if (stack->content > max)
 		{
 			max = stack->content;
-			sort->max = stack;
+			(*sort)->max = stack;
 		}
 		if (stack->content < min)
 		{
 			min = stack->content;
-			sort->min = stack;
+			(*sort)->min = stack;
 		}
 		stack = stack->next;
 	}
-	return (sort);
 }
 
 void	fetch_index(t_stack *stack, t_sort *sort)
@@ -106,14 +101,11 @@ void	fetch_cost(t_stack *stack_a, t_sort *sort_a, t_sort *sort_b)
 	}
 }
 
-void	fetch_node_a(t_stack *stack_a, t_stack *stack_b, t_sort **sort_a, t_sort **sort_b)
+void	fetch_node_a(t_stack *stack_a, t_stack *stack_b,
+			t_sort **sort_a, t_sort **sort_b)
 {
-	*sort_a = get_sort(stack_a);
-	if (!*sort_a)
-		return ;
-	*sort_b = get_sort(stack_b);
-	if (!*sort_b)
-		return ;
+	get_sort(stack_a, sort_a);
+	get_sort(stack_b, sort_b);
 	fetch_index(stack_a, *sort_a);
 	fetch_index(stack_b, *sort_b);
 	fetch_target(stack_a, stack_b, *sort_b);

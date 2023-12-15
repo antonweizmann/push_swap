@@ -3,24 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:04:36 by aweizman          #+#    #+#             */
-/*   Updated: 2023/12/15 04:37:10 by antonweizma      ###   ########.fr       */
+/*   Updated: 2023/12/15 19:04:18 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	big_sort(t_stack **stack_a, t_stack **stack_b)
+void	ft_error_sort(t_sort **sort_a, t_sort **sort_b)
+{
+	free(*sort_a);
+	free(*sort_b);
+	free(sort_a);
+	free(sort_a);
+	ft_printf("Error\n");
+	exit(0);
+}
+
+void	ft_error(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack	*tmp;
+
+	while (*stack_a)
+	{
+		tmp = *stack_a;
+		*stack_a = (*stack_a)->next;
+		free (tmp);
+	}
+	while (*stack_b)
+	{
+		tmp = *stack_b;
+		*stack_b = (*stack_b)->next;
+		free (tmp);
+	}
+	free(stack_a);
+	free(stack_b);
+	free(tmp);
+	ft_printf("Error\n");
+	exit(0);
+}
+
+void	big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
 {
 	t_sort	*sort_a;
 	t_sort	*sort_b;
 
-	sort_a = NULL;
-	sort_b = NULL;
-	pb(stack_a, stack_b);
-	pb(stack_a, stack_b);
+	sort_a = malloc(sizeof(t_sort));
+	sort_b = malloc(sizeof(t_sort));
+	if (!sort_a || !sort_b)
+		return (ft_error_sort(&sort_a, &sort_b));
+	if (argc > 3)
+		pb(stack_a, stack_b);
+	if (argc > 4)
+		pb(stack_a, stack_b);
 	while (ft_lstsize(*stack_a) > 3 && !is_sorted(*stack_a))
 	{
 		fetch_node_a(*stack_a, *stack_b, &sort_a, &sort_b);
@@ -43,12 +80,8 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b, int argc)
 		sa(stack_a);
 	else if (argc == 3)
 		sort_3(stack_a);
-	else if (argc == 4)
-		sort_4(stack_a, stack_b);
-	else if (argc == 5)
-		sort_5(stack_a, stack_b);
 	else
-		big_sort(stack_a, stack_b);
+		big_sort(stack_a, stack_b, argc);
 }
 
 int	main(int argc, char	**argv)
@@ -66,8 +99,8 @@ int	main(int argc, char	**argv)
 		argv++;
 	argc = count_args(argv);
 	if (!argv || !stack_a || !stack_b || check_conds(argv, argc) == -1
-		|| init_stacks(argv, stack_a, argc) == -1)
-		return (ft_printf("Error\n"), 0);
+		|| init_stacks(argv, stack_a, argc) == 0)
+		return (ft_error(&stack_a, &stack_b), 0);
 	stack_b = NULL;
 	push_swap(&stack_a, &stack_b, argc);
 }

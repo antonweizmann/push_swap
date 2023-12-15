@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:09:09 by aweizman          #+#    #+#             */
-/*   Updated: 2023/12/11 12:29:32 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/12/15 16:08:15 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,33 @@ int	is_sorted(t_stack *stack)
 			return (0);
 	}
 	return (1);
+}
+
+void	sort_3(t_stack **stack_a)
+{
+	t_stack	*two;
+	t_stack	*three;
+	t_stack	*one;
+
+	one = *stack_a;
+	two = (*stack_a)->next;
+	three = two->next;
+	if (one->content > two->content && two->content < three->content
+		&& three->content > one->content)
+		sa(stack_a);
+	if (one->content > two->content && two->content > three->content
+		&& one->content > three->content)
+		sa(stack_a);
+	if (one->content < two->content && two->content > three->content
+		&& one->content < three->content)
+		sa(stack_a);
+	if (one->content < two->content && two->content > three->content
+		&& three->content < one->content)
+		rra(stack_a);
+	if (one->content > two->content && two->content < three->content
+		&& three->content < one->content)
+		ra(stack_a);
+	if (!(one->content < two->content && two->content < three->content
+			&& three->content > one->content))
+		sort_3(stack_a);
 }
